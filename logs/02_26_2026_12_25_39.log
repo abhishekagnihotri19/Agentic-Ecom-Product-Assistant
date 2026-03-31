@@ -1,0 +1,21 @@
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.799972Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retriever"], "timestamp": "2026-02-26T06:55:40.799972Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-26T06:55:40.805615Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.805615Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.805615Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.805615Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.806771Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.806771Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retriever"], "timestamp": "2026-02-26T06:55:40.808003Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-26T06:55:40.809751Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.810769Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.810769Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.810769Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.811543Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-26T06:55:40.811543Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retriever"], "timestamp": "2026-02-26T06:55:40.812982Z", "level": "info", "event": "YAML Config loaded"}

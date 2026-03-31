@@ -1,0 +1,51 @@
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+{"timestamp": "2026-02-03T12:39:24.743262Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:39:24.744277Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:39:24.744277Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:39:24.746286Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:39:24.747273Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-03T12:39:24.748266Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-03T12:39:24.757435Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-03T12:40:46.530930Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:40:46.532597Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:40:46.533683Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:40:46.533683Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:40:46.533683Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-03T12:40:46.533683Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-03T12:40:46.539689Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-03T12:45:55.472187Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:45:55.472187Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:45:55.473185Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:45:55.473185Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:45:55.474188Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-03T12:45:55.474745Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-03T12:45:55.480797Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-03T12:47:47.886988Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:47:47.888912Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:47:47.888912Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T12:47:47.889997Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T12:47:47.889997Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-03T12:47:47.890913Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-03T12:47:47.893961Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "models/text-embedding-004", "timestamp": "2026-02-03T12:47:47.902840Z", "level": "info", "event": "Loading Embedding Model"}
+vector store default init, collection 'scrapper_data'
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+Detecting API environment 'prod' from supplied endpoint
+createCollection('scrapper_data')
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace "HTTP/1.1 200 OK"
+finished createCollection('scrapper_data')
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+inserting 3 documents in 'scrapper_data'
+insertMany(chunk) on 'scrapper_data'
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace/scrapper_data "HTTP/1.1 200 OK"
+finished insertMany(chunk) on 'scrapper_data'
+finished inserting 3 documents in 'scrapper_data'
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+creating iterator on 'scrapper_data'
+finished creating iterator on 'scrapper_data'
+command=find on 'scrapper_data'
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace/scrapper_data "HTTP/1.1 200 OK"
+finished command=find on 'scrapper_data'

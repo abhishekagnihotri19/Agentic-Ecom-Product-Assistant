@@ -1,0 +1,17 @@
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-07T06:33:58.238536Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-07T06:33:58.255457Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "models/text-embedding-001", "timestamp": "2026-02-07T06:33:58.256569Z", "level": "info", "event": "Loading Embedding Model"}
+vector store default init, collection 'scrapper_data'
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-001:batchEmbedContents "HTTP/1.1 404 Not Found"

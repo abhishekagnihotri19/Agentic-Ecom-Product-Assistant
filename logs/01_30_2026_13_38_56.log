@@ -1,0 +1,9 @@
+{"timestamp": "2026-01-30T08:08:57.454534Z", "level": "warning", "event": "GOOGLE_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-30T08:08:57.454534Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-30T08:08:57.454534Z", "level": "warning", "event": "GROQ_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-30T08:08:57.454534Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-30T08:08:57.455896Z", "level": "warning", "event": "ASTRA_DB_KEYSPACE is missing from enviroments"}
+{"timestamp": "2026-01-30T08:08:57.455896Z", "level": "warning", "event": "ASTRA_DB_APPLICATION_TOKEN is missing from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-01-30T08:08:57.458131Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "models/text-embedding-004", "timestamp": "2026-01-30T08:08:57.458131Z", "level": "info", "event": "Loading Embedding Model"}
+{"error": "1 validation error for GoogleGenerativeAIEmbeddings\n  Value error, API key required for Gemini Developer API. Provide api_key parameter or set GOOGLE_API_KEY/GEMINI_API_KEY environment variable. [type=value_error, input_value={'model': 'models/text-em... 'google_api_key': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error", "timestamp": "2026-01-30T08:08:57.462603Z", "level": "error", "event": "Error Loading Embedding Model"}

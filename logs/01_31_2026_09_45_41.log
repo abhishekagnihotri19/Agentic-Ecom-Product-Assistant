@@ -1,0 +1,9 @@
+{"timestamp": "2026-01-31T04:15:41.570120Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-01-31T04:15:41.571114Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-31T04:15:41.571114Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-01-31T04:15:41.571114Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-01-31T04:15:41.571114Z", "level": "warning", "event": "ASTRA_DB_KEYSPACE is missing from enviroments"}
+{"timestamp": "2026-01-31T04:15:41.571114Z", "level": "warning", "event": "ASTRA_DB_APPLICATION_TOKEN is missing from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-01-31T04:15:41.573109Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "models/text-embedding-004", "timestamp": "2026-01-31T04:15:41.573109Z", "level": "info", "event": "Loading Embedding Model"}
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"

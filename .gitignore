@@ -1,10 +1,29 @@
 # Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# Virtual environment
+venv/
+ecommVenv/
 
-# Virtual environments
-.venv
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual env
+venv/
+ecommVenv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Packaging files
+*.egg-info/
+
+# Env files
+.env

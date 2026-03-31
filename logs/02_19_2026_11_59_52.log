@@ -1,0 +1,29 @@
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.060727Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-19T06:29:54.060727Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "gemini-embedding-001", "timestamp": "2026-02-19T06:29:54.086564Z", "level": "info", "event": "Loading Embedding Model"}
+vector store default init, collection 'scrapper_data'
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+Detecting API environment 'prod' from supplied endpoint
+createCollection('scrapper_data')
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace "HTTP/1.1 200 OK"
+finished createCollection('scrapper_data')
+Processing request of type CallToolRequest
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+creating iterator on 'scrapper_data'
+finished creating iterator on 'scrapper_data'
+command=find on 'scrapper_data'
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace/scrapper_data "HTTP/1.1 200 OK"
+finished command=find on 'scrapper_data'
+Processing request of type ListToolsRequest

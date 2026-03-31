@@ -1,8 +1,10 @@
 import importlib.metadata
 packages = [
-    "langchain",
-    "langchain_core",
-    "python-dotenv",
+    "langchain-mcp-adapters",
+    "mcp",
+    "ddgs",
+    "langchain-openai"
+
     ]
 for pkg in packages:
     try:

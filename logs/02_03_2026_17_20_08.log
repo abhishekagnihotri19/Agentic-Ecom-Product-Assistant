@@ -1,0 +1,10 @@
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+{"timestamp": "2026-02-03T11:52:41.251400Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T11:52:41.252317Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T11:52:41.253316Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-03T11:52:41.253316Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-03T11:52:41.253316Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-03T11:52:41.255314Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-03T11:52:41.258314Z", "level": "info", "event": "YAML Config loaded"}
+patching driver executable C:\Users\abhia\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe

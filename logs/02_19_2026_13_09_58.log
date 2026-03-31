@@ -1,0 +1,27 @@
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.834430Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-19T07:39:59.841182Z", "level": "info", "event": "YAML Config loaded"}
+{"timestamp": "2026-02-19T07:39:59.851545Z", "level": "info", "event": "GOOGLE_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.851545Z", "level": "warning", "event": "OPENAI_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.851545Z", "level": "info", "event": "GROQ_API_KEYloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.852546Z", "level": "warning", "event": "ASTRA_DB_API_KEY is missing from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.852546Z", "level": "info", "event": "ASTRA_DB_KEYSPACEloaded from enviroments"}
+{"timestamp": "2026-02-19T07:39:59.852546Z", "level": "info", "event": "ASTRA_DB_APPLICATION_TOKENloaded from enviroments"}
+{"Config_keys": ["llm", "astra_db", "embedding_model", "retreiver"], "timestamp": "2026-02-19T07:39:59.853625Z", "level": "info", "event": "YAML Config loaded"}
+{"model": "gemini-embedding-001", "timestamp": "2026-02-19T07:39:59.854633Z", "level": "info", "event": "Loading Embedding Model"}
+vector store default init, collection 'scrapper_data'
+HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents "HTTP/1.1 200 OK"
+Detecting API environment 'prod' from supplied endpoint
+createCollection('scrapper_data')
+HTTP Request: POST https://197ad2d4-6ad3-44be-8869-2dd2cd1aa5f1-us-east-2.apps.astra.datastax.com/api/json/v1/default_keyspace "HTTP/1.1 200 OK"
+finished createCollection('scrapper_data')
+Processing request of type CallToolRequest
+Impersonate 'chrome_105' does not exist, using 'random'
+Error in engine grokipedia: DDGSException("ConnectionError: ConnectionError('Connection error for URL: https://wt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=i%20phone%2017', 'https://wt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=i%20phone%2017')")
+response: https://grokipedia.com/api/typeahead?query=i+phone+17&limit=1 200
+response: https://www.mojeek.com/search?q=i+phone+17 200
+Processing request of type ListToolsRequest

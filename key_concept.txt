@@ -1,0 +1,43 @@
+def scrap_flipkart_product(self, query, max_products=2, review_count=2):
+        options= uc.ChromeOptions()
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disabled-blink-features-AutomationControlled")
+        driver= uc.Chrome(options=options, version_main=144, use_subprocess=True)
+        search_url= f"https://www.flipkart.com/search?q={query.replace(' ', '+')}"
+        driver.get(search_url)
+        time.sleep(4)
+
+        try:
+            driver.find_element (By.XPATH, "//button[contains(text(),'X')]").click()
+        except Exception as e:
+            print (f"Error occur while closing pop up, {e}")
+        time.sleep(2)
+        
+        products=[]
+
+        items = driver.find_elements (By.CSS_SELECTOR, "div[data-id]")[:max_products]
+        
+        for item in items:
+            try:
+                title= item.find_element (By.CSS_SELECTOR, "div.RG5Slk").text.strip()
+                price= item.find_element(By.CSS_SELECTOR, "div.hZ3P6w DeU9vF").text.strip()
+                rating= item.find_element(By.CSS_SELECTOR, "span.CjyrHS").text.strip()
+                reviews_text= item.find_element(By.CSS_SELECTOR, "span.Wphh3N").text.strip()
+                match = re.search(r"\d+(,\d+)?(?=\s+Reviews)", reviews_text)
+                total_review= match.group(0) if match else "N/A"
+
+                link_el = item.find_element(By.CSS_SELECTOR, "a[href*='/p/']")
+                href = link_el.get_attribute("href")
+                product_link = href if href.startswith("http") else "https://www.flipkart.com" + href
+                match = re.findall(r"/p/(itm[0-9A-Za-z]+)", href)
+                product_id = match[0] if match else "N/A"
+        
+            except Exception as e:
+                print(f"Error occurred while processing item: {e}")
+                continue
+
+            top_reviews= self.get_top_reviews(product_link, count=review_count) if "flipkart.com" in product_link else "Invalid product URL"
+            products.append([product_id, title, price, rating, total_review, top_reviews])
+        driver.quit()
+        return products
+    
