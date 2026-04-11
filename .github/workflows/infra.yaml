@@ -37,6 +37,8 @@ jobs:
             --template-body file://infra/eks-with-ecr.yaml
 
       # 🚀 Deploy Stack
+      
+      
       - name: Deploy CloudFormation Stack
         run: |
           aws cloudformation deploy \
@@ -44,3 +46,13 @@ jobs:
             --template-file infra/eks-with-ecr.yaml \
             --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
             --region ${{ secrets.AWS_REGION }}
+
+      - name: Check Stack Status
+        run: |
+          aws cloudformation describe-stacks \
+            --stack-name product-assistant-cluster
+
+      - name: Get Stack Events (IMPORTANT)
+        run: |
+          aws cloudformation describe-stack-events \
+            --stack-name product-assistant-cluster
