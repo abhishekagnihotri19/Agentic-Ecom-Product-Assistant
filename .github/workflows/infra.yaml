@@ -50,11 +50,12 @@ jobs:
       - name: Create Change Set
         run: |
           aws cloudformation create-change-set \
-            --stack-name product-assistant-cluster \
-            --template-body file://infra/eks-with-ecr.yaml \
-            --change-set-name debug-changeset \
-            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
-            --region ${{ secrets.AWS_REGION }}
+          --stack-name product-assistant-cluster \
+          --template-body file://infra/eks-with-ecr.yaml \
+          --change-set-name debug-changeset \
+          --change-set-type CREATE \
+          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+          --region ${{ secrets.AWS_REGION }}
 
       # ⏳ Wait (do NOT fail immediately)
       - name: Wait for Change Set
