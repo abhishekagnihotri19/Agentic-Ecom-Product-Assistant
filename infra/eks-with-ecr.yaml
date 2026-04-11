@@ -5,17 +5,21 @@ Parameters:
   ClusterName:
     Type: String
     Default: product-assistant-cluster-latest
+
   NodeInstanceType:
     Type: String
     Default: t3.medium
+
   DesiredCapacity:
     Type: Number
     Default: 2
+
   ECRRepositoryName:
     Type: String
     Default: product-assistant
 
 Resources:
+
   ### --- VPC ---
   VPC:
     Type: AWS::EC2::VPC
@@ -50,6 +54,10 @@ Resources:
       Tags:
         - Key: Name
           Value: PublicSubnet1
+        - Key: kubernetes.io/role/elb
+          Value: 1
+        - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
+          Value: shared
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -61,6 +69,10 @@ Resources:
       Tags:
         - Key: Name
           Value: PublicSubnet2
+        - Key: kubernetes.io/role/elb
+          Value: 1
+        - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
+          Value: shared
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -90,7 +102,7 @@ Resources:
       SubnetId: !Ref PublicSubnet2
       RouteTableId: !Ref PublicRouteTable
 
-  ### --- Security Group for EKS ---
+  ### --- Security Group ---
   EKSSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -104,7 +116,6 @@ Resources:
           CidrIp: 0.0.0.0/0
 
   ### --- ECR Repository ---
-
   ProductAssistantECR:
     Type: AWS::ECR::Repository
     Properties:
@@ -130,6 +141,7 @@ Resources:
   ### --- EKS Cluster ---
   EKSCluster:
     Type: AWS::EKS::Cluster
+    DependsOn: EKSClusterRole
     Properties:
       Name: !Ref ClusterName
       RoleArn: !GetAtt EKSClusterRole.Arn
@@ -156,10 +168,12 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
 
-    ### --- EKS NodeGroup ---
+  ### --- EKS NodeGroup ---
   NodeGroup:
     Type: AWS::EKS::Nodegroup
-    DependsOn: EKSCluster   # ensures cluster is ready
+    DependsOn:
+      - EKSCluster
+      - NodeGroupRole
     Properties:
       ClusterName: !Ref ClusterName
       NodeRole: !GetAtt NodeGroupRole.Arn
@@ -173,13 +187,10 @@ Resources:
       InstanceTypes:
         - !Ref NodeInstanceType
 
-
 Outputs:
   ECRRepositoryUri:
     Description: URI of the ECR Repository
     Value: !GetAtt ProductAssistantECR.RepositoryUri
-    Export:
-      Name: ProductAssistant-ECR-Uri
 
   EKSClusterName:
     Description: Name of the EKS Cluster
