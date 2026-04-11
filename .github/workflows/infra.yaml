@@ -31,7 +31,7 @@ jobs:
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
 
-      # 🧹 CLEANUP (IMPORTANT)
+      # 🧹 CLEANUP
       - name: Delete old stack (if exists)
         run: |
           aws cloudformation delete-stack \
@@ -46,18 +46,18 @@ jobs:
           aws cloudformation validate-template \
             --template-body file://infra/eks-with-ecr.yaml
 
-      # 🚨 CREATE CHANGE SET (DEBUG MODE)
+      # 🚨 CREATE CHANGE SET
       - name: Create Change Set
         run: |
           aws cloudformation create-change-set \
-          --stack-name product-assistant-cluster \
-          --template-body file://infra/eks-with-ecr.yaml \
-          --change-set-name debug-changeset \
-          --change-set-type CREATE \
-          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
-          --region ${{ secrets.AWS_REGION }}
+            --stack-name product-assistant-cluster \
+            --template-body file://infra/eks-with-ecr.yaml \
+            --change-set-name debug-changeset \
+            --change-set-type CREATE \
+            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+            --region ${{ secrets.AWS_REGION }}
 
-      # ⏳ Wait (do NOT fail immediately)
+      # ⏳ Wait (allow failure)
       - name: Wait for Change Set
         run: |
           aws cloudformation wait change-set-create-complete \
@@ -65,30 +65,36 @@ jobs:
             --change-set-name debug-changeset \
             --region ${{ secrets.AWS_REGION }} || true
 
-      # 🔥 SHOW REAL ERROR (MOST IMPORTANT)
+      # 🔥 SHOW REAL ERROR
       - name: Describe Change Set (REAL ERROR)
+        id: describe_changeset
         run: |
           aws cloudformation describe-change-set \
             --stack-name product-assistant-cluster \
             --change-set-name debug-changeset \
-            --region ${{ secrets.AWS_REGION }}
+            --region ${{ secrets.AWS_REGION }} \
+            > changeset.json
+
+          cat changeset.json
 
       # 🚀 EXECUTE ONLY IF SUCCESS
       - name: Execute Change Set
+        if: contains(steps.describe_changeset.outputs.stdout, 'CREATE_COMPLETE')
         run: |
           aws cloudformation execute-change-set \
             --stack-name product-assistant-cluster \
             --change-set-name debug-changeset \
             --region ${{ secrets.AWS_REGION }}
 
-      # 📊 Monitor stack
+      # 📊 Wait for completion (only if executed)
       - name: Wait for Stack Creation
+        if: contains(steps.describe_changeset.outputs.stdout, 'CREATE_COMPLETE')
         run: |
           aws cloudformation wait stack-create-complete \
             --stack-name product-assistant-cluster \
             --region ${{ secrets.AWS_REGION }}
 
-      # 📊 Final status
+      # 📊 Final events
       - name: Get Stack Events
         run: |
           aws cloudformation describe-stack-events \
