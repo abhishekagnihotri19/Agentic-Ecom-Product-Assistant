@@ -62,3 +62,16 @@ jobs:
 
       - name: Get Stack Events
         run: aws cloudformation describe-stack-events --stack-name product-assistant-cluster
+
+      - name: Debug Change Set (CRITICAL)
+        run: |
+          CHANGE_SET_NAME=$(aws cloudformation list-change-sets \
+            --stack-name product-assistant-cluster \
+            --query "Summaries[0].ChangeSetName" \
+            --output text)
+
+          echo "ChangeSet: $CHANGE_SET_NAME"
+
+          aws cloudformation describe-change-set \
+            --stack-name product-assistant-cluster \
+            --change-set-name $CHANGE_SET_NAME
