@@ -56,3 +56,9 @@ jobs:
         run: |
           aws cloudformation describe-stack-events \
             --stack-name product-assistant-cluster
+
+      - name: Check Stack Status
+        run: aws cloudformation describe-stacks --stack-name product-assistant-cluster
+
+      - name: Get Stack Events
+        run: aws cloudformation describe-stack-events --stack-name product-assistant-cluster
