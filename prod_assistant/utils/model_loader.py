@@ -19,7 +19,6 @@ load_dotenv()
 class ApiKeyManager:
     def __init__(self):
        self.api_keys = {"GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),
-                        "OPENAI_API_KEY": os.getenv ("OPENAI_API_KEY"),
                         "GROQ_API_KEY": os.getenv("GROQ_API_KEY"),
                         "ASTRA_DB_API_KEY" : os.getenv("ASTRA_DB_API_KEY"),
                         "ASTRA_DB_KEYSPACE" : os.getenv("ASTRA_DB_KEYSPACE"),
@@ -92,12 +91,7 @@ class ModelLoader:
                     max_retries=2,
                     groq_api_key = self.api_key_manager.get_key("GROQ_API_KEY")
                 ),
-                "openai" : lambda : ChatOpenAI (
-                    model = model_name,
-                    temperature = temperature,
-                    max_tokens = max_token,
-                    openai_api_key = self.api_key_manager.get_key("OPENAI_API_KEY")
-                ),
+                
             }
 
             if provider not in PROVIDER_REGISTRY:
