@@ -1,7 +1,10 @@
 name: Provision Infra (EKS + ECR)
 
 on:
-  workflow_dispatch:   # manual trigger only
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   provision:
@@ -11,7 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Configure AWS credentials
+      # 🔍 Debug: List all files (check if template exists)
+      - name: Check repository files
+        run: ls -R
+
+      # 🔐 Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -19,7 +26,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Deploy CloudFormation Stack
+      # 🔍 Debug: Verify AWS access
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
+      # 🔍 Debug: Validate CloudFormation template
+      - name: Validate CloudFormation Template
+        run: |
+          aws cloudformation validate-template \
+            --template-body file://infra/eks-with-ecr.yaml
+
+      # 🚀 Deploy Stack
       - name: Deploy CloudFormation Stack
         run: |
           aws cloudformation deploy \
