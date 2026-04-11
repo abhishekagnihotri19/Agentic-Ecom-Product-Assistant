@@ -5,6 +5,7 @@ on:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  CLUSTER_NAME: product-assistant-cluster-latest
 
 jobs:
   provision:
