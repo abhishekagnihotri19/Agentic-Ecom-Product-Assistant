@@ -78,9 +78,6 @@ Resources:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
-      Tags:
-        - Key: Name
-          Value: PublicRouteTable
 
   PublicRoute:
     Type: AWS::EC2::Route
@@ -137,12 +134,15 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
-        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy   # ✅ FIX ADDED
 
   ### --- EKS Cluster ---
   EKSCluster:
     Type: AWS::EKS::Cluster
-    DependsOn: EKSClusterRole
+    DependsOn:
+      - EKSClusterRole
+      - AttachGateway
+      - PublicRoute
     Properties:
       Name: !Ref ClusterName
       RoleArn: !GetAtt EKSClusterRole.Arn
@@ -152,6 +152,8 @@ Resources:
           - !Ref PublicSubnet2
         SecurityGroupIds:
           - !Ref EKSSecurityGroup
+        EndpointPublicAccess: true       # ✅ FIX ADDED
+        EndpointPrivateAccess: false     # ✅ FIX ADDED
 
   ### --- IAM Role for NodeGroup ---
   NodeGroupRole:
