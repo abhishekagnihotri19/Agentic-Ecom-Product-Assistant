@@ -189,6 +189,9 @@ Resources:
         MinSize: 1
       InstanceTypes:
         - !Ref NodeInstanceType
+      AmiType: AL2_x86_64
+      DiskSize: 20
+      CapacityType: ON_DEMAND
 
 Outputs:
   ECRRepositoryUri:
