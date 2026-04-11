@@ -11,14 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 📥 Checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 🔍 Debug: List all files (check if template exists)
+      # 🔍 Debug files
       - name: Check repository files
         run: ls -R
 
-      # 🔐 Configure AWS credentials
+      # 🔐 AWS Login
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -26,52 +27,69 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # 🔍 Debug: Verify AWS access
+      # 🔍 Confirm identity
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
 
-      # 🔍 Debug: Validate CloudFormation template
+      # 🧹 CLEANUP (IMPORTANT)
+      - name: Delete old stack (if exists)
+        run: |
+          aws cloudformation delete-stack \
+            --stack-name product-assistant-cluster || true
+
+          aws cloudformation wait stack-delete-complete \
+            --stack-name product-assistant-cluster || true
+
+      # 🔍 Validate template
       - name: Validate CloudFormation Template
         run: |
           aws cloudformation validate-template \
             --template-body file://infra/eks-with-ecr.yaml
 
-      # 🚀 Deploy Stack
-      
-      
-      - name: Deploy CloudFormation Stack
+      # 🚨 CREATE CHANGE SET (DEBUG MODE)
+      - name: Create Change Set
         run: |
-          aws cloudformation deploy \
+          aws cloudformation create-change-set \
             --stack-name product-assistant-cluster \
-            --template-file infra/eks-with-ecr.yaml \
+            --template-body file://infra/eks-with-ecr.yaml \
+            --change-set-name debug-changeset \
             --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
             --region ${{ secrets.AWS_REGION }}
 
-      - name: Check Stack Status
+      # ⏳ Wait (do NOT fail immediately)
+      - name: Wait for Change Set
         run: |
-          aws cloudformation describe-stacks \
-            --stack-name product-assistant-cluster
-
-      - name: Get Stack Events (IMPORTANT)
-        run: |
-          aws cloudformation describe-stack-events \
-            --stack-name product-assistant-cluster
-
-      - name: Check Stack Status
-        run: aws cloudformation describe-stacks --stack-name product-assistant-cluster
-
-      - name: Get Stack Events
-        run: aws cloudformation describe-stack-events --stack-name product-assistant-cluster
-
-      - name: Debug Change Set (CRITICAL)
-        run: |
-          CHANGE_SET_NAME=$(aws cloudformation list-change-sets \
+          aws cloudformation wait change-set-create-complete \
             --stack-name product-assistant-cluster \
-            --query "Summaries[0].ChangeSetName" \
-            --output text)
+            --change-set-name debug-changeset \
+            --region ${{ secrets.AWS_REGION }} || true
 
-          echo "ChangeSet: $CHANGE_SET_NAME"
-
+      # 🔥 SHOW REAL ERROR (MOST IMPORTANT)
+      - name: Describe Change Set (REAL ERROR)
+        run: |
           aws cloudformation describe-change-set \
             --stack-name product-assistant-cluster \
-            --change-set-name $CHANGE_SET_NAME
+            --change-set-name debug-changeset \
+            --region ${{ secrets.AWS_REGION }}
+
+      # 🚀 EXECUTE ONLY IF SUCCESS
+      - name: Execute Change Set
+        run: |
+          aws cloudformation execute-change-set \
+            --stack-name product-assistant-cluster \
+            --change-set-name debug-changeset \
+            --region ${{ secrets.AWS_REGION }}
+
+      # 📊 Monitor stack
+      - name: Wait for Stack Creation
+        run: |
+          aws cloudformation wait stack-create-complete \
+            --stack-name product-assistant-cluster \
+            --region ${{ secrets.AWS_REGION }}
+
+      # 📊 Final status
+      - name: Get Stack Events
+        run: |
+          aws cloudformation describe-stack-events \
+            --stack-name product-assistant-cluster \
+            --region ${{ secrets.AWS_REGION }}
