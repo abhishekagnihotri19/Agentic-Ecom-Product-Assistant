@@ -47,33 +47,46 @@ jobs:
           aws cloudformation validate-template \
             --template-body file://infra/eks-with-ecr.yaml
 
-      # 🚀 DEPLOY STACK (FINAL FIX)
+     # 🚀 DEPLOY STACK with error handling
       - name: Deploy CloudFormation Stack
         run: |
-          aws cloudformation deploy \
+          if ! aws cloudformation deploy \
             --stack-name product-assistant-cluster \
             --template-file infra/eks-with-ecr.yaml \
             --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
             --region ${{ secrets.AWS_REGION }} \
-            --no-fail-on-empty-changeset
+            --no-fail-on-empty-changeset; then
+            echo "Deployment failed. Fetching stack events..."
+            aws cloudformation describe-stack-events \
+              --stack-name product-assistant-cluster \
+              --region ${{ secrets.AWS_REGION }} \
+              --query 'StackEvents[?ResourceStatus==`CREATE_FAILED` || ResourceStatus==`UPDATE_FAILED`]' \
+              --output table
+            exit 1
+          fi
 
-      # ⏳ Wait for completion
+# ⏳ Wait for completion with better error handling
       - name: Wait for Stack Creation
         run: |
           aws cloudformation wait stack-create-complete \
             --stack-name product-assistant-cluster \
-            --region ${{ secrets.AWS_REGION }}
-
-      # 📊 Show stack status
-      - name: Check Stack Status
-        run: |
+            --region ${{ secrets.AWS_REGION }} || \
+          aws cloudformation wait stack-update-complete \
+            --stack-name product-assistant-cluster \
+            --region ${{ secrets.AWS_REGION }} || \
+          (echo "Stack failed to reach stable state:"; \
           aws cloudformation describe-stacks \
             --stack-name product-assistant-cluster \
-            --region ${{ secrets.AWS_REGION }}
+            --region ${{ secrets.AWS_REGION }} \
+            --query 'Stacks[0].[StackStatus,StackStatusReason]' \
+            --output text; exit 1)
 
-      # 📊 Debug events (VERY IMPORTANT if failure)
+# 📊 Debug events (Enhanced)
       - name: Get Stack Events
+        if: always()
         run: |
           aws cloudformation describe-stack-events \
             --stack-name product-assistant-cluster \
-            --region ${{ secrets.AWS_REGION }}
+            --region ${{ secrets.AWS_REGION }} \
+            --query 'StackEvents[0:20]' \
+            --output table
