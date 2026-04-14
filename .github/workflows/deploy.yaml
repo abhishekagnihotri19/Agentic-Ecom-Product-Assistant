@@ -39,6 +39,11 @@ jobs:
       # ✅ Generate tag
       - name: Set Image Tag
         run: echo "IMAGE_TAG=$(date +%s)" >> $GITHUB_ENV
+        
+      - name: Final Debug
+        run: |
+          echo "REGISTRY=${{ secrets.ECR_REGISTRY }}"
+          echo "REPOSITORY=${{ secrets.ECR_REPOSITORY }}"
 
       # ✅ Build & Push
       - name: Build and Push Docker image
