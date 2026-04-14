@@ -8,7 +8,7 @@ Parameters:
 
   NodeInstanceType:
     Type: String
-    Default: t3.medium
+    Default: t3.micro
 
   DesiredCapacity:
     Type: Number
