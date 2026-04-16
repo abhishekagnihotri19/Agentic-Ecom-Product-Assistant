@@ -24,6 +24,7 @@ langchain-mcp-adapters==0.2.1
 mcp==1.26.0
 ddgs==9.10.0
 langchain-openai==1.1.7
+ragas==0.3.1
 
 
 -e .
