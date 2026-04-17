@@ -11,9 +11,23 @@ from prod_assistant.retriever.retrieval import Retriever
 from prod_assistant.utils.model_loader import ModelLoader
 from langchain_mcp_adapters.client import MultiServerMCPClient
 import asyncio
+import uuid
+import os
 
 class AgenticRAG:
     """Agentic RAG Pipeling using MCP Server"""
+    async def initialize(self):
+        try:
+            print("🔄 Fetching MCP tools...")
+            self.mcp_tools = await self.mcp_client.get_tools()
+            print("✅ MCP tools loaded:", [t.name for t in self.mcp_tools])
+
+        except Exception as e:
+            import traceback
+            print("❌ FULL MCP ERROR ↓↓↓")
+            traceback.print_exc()
+            self.mcp_tools = []
+
     class AgentState(TypedDict, total=False):
         # total= False, meaning following total variable are optional, not Mandatory
         
@@ -36,7 +50,8 @@ class AgenticRAG:
            {
                "hybrid_search":{
                    "transport":"streamable_http",
-                   "url": "http://localhost:8000/mcp"
+                   "url": os.getenv("MCP_URL", "http://127.0.0.1:8000/mcp")
+
                }
            }
            
@@ -83,6 +98,7 @@ class AgenticRAG:
         print ("LLM response:", response)
         return{
             "needs_retrieval": False,
+            "answer": response,
             "messages":[AIMessage(content= response)]}
     
     async def vector_retriever(self, state:AgentState):
@@ -105,46 +121,87 @@ class AgenticRAG:
         
         except Exception as e:
             context= f"Error during invoking Retriever:{e}"
-
-            return {"messages":[HumanMessage(content=context)]}
+            return {"context":context}
     
 
-    async def web_search(self, state:AgentState):
-        query=state["query"]
-        tool_web= next((t for t in self.mcp_tools if t.name == "web_search"), None)
+    async def web_search(self, state: AgentState):
+        query = state["query"]
+
+        tool_web = next((t for t in self.mcp_tools if t.name == "web_search"), None)
+
         if not tool_web:
-            return {"messages":[ HumanMessage(content="Web Search Tool Not available in MCP server")]}
+            return {"context": "Web search not available"}
+
         try:
-            result= await tool_web.ainvoke({"query":query})
-            context= result if result else "No Data from web"
-            return {"messages": [HumanMessage(content=context)]}
+            result = await tool_web.ainvoke({"query": query})
+
+            print("🌐 WebSearch Result:", result)
+
+            context = str(result) if result else "No web data found"
+
+            # ✅ FORCE OVERRIDE STATE
+            return {
+                "context": context,
+                "messages": [AIMessage(content=context)]  # 🔥 VERY IMPORTANT
+            }
+
         except Exception as e:
-            context= f"Error during WebSearch {e}"
-            return {"messages":[HumanMessage(content=context)]}
+            return {
+                "context": f"Web search error: {str(e)}"
+            }
         
-    
 
     
     def _route_after_assistant(self, state:AgentState):
         if state.get("needs_retrieval"):
-          return Retriever
+          return "Retriever"
         return END
     
-    def generator(self, state:AgentState):
-        context= state["context"]
-        question= state["question"]
-        prompt= ChatPromptTemplate.from_template(PromptRegistry[PromptType.PRODUCT_BOT])
-        chain= prompt | self.llm | StrOutputParser()
-        gen_response= chain.invoke ({"question": question, "context": context })
+    def generator(self, state: AgentState):
+        context = state.get("context", "")
+        
+        # 🔥 HANDLE MCP STRUCTURE
+        if isinstance(context, list):
+            context = " ".join([c.get("text", "") for c in context if isinstance(c, dict)])
+
+        context = str(context)
+
+        print("🧠 FINAL CONTEXT:", context)
+
+        question = state.get("question", "")
+
+        template_str = PromptRegistry[PromptType.PRODUCT_BOT].template
+        prompt = ChatPromptTemplate.from_template(template_str)
+
+        chain = prompt | self.llm | StrOutputParser()
+
+        gen_response = chain.invoke({
+            "question": question,
+            "context": context
+        })
+
         return {
             "answer": gen_response,
-            "messages": [AIMessage(content= gen_response)],
+            "messages": [AIMessage(content=gen_response)],
         }
-    def _route_after_retriever(self, state:AgentState):
-        if not state.get("context"):
-            return "web_search"
-        return "generator"
-    
+    def _route_after_retriever(self, state: AgentState):
+        context = state.get("context", "")
+
+        context_str = str(context).lower()
+
+        print("🔍 Context:", context_str)
+
+        if (
+            not context
+            or "n/a" in context_str
+            or "not available" in context_str
+            or "no data" in context_str
+        ):
+            print("⚠️ Routing to WebSearch")
+            return "WebSearch"   
+
+        print("✅ Routing to Generator")
+        return "Generator"       
 # Build Workflow
 
     def build_workflow(self):
@@ -166,19 +223,29 @@ class AgenticRAG:
         
         workflow.add_conditional_edges("Retriever", self._route_after_retriever,
                                       {"Generator": "Generator",
-                                       "Websearch":"WebSearch"} )
+                                       "WebSearch":"WebSearch"} )
         
         workflow.add_edge("WebSearch", "Generator")
         workflow.add_edge("Generator", END)
 
         return workflow
-    def run_pipeline(self, question, thread_id:str= "default_thread")-> str:
-        initial_question= {
-            "messages": [HumanMessage(content= question)]
+    def run_pipeline(self, question) -> str:
+        thread_id = str(uuid.uuid4())
+        initial_question = {
+            "messages": [HumanMessage(content=question)]
         }
 
-        result= asyncio.run(self.app.ainvoke (initial_question, config= {"configurable": {"thread_id": thread_id}}))
-        return result
+        result = asyncio.run(
+            self.app.ainvoke(
+                initial_question,
+                config={"configurable": {"thread_id": thread_id}}
+            )
+        )
+
+        print("🧾 FULL RESULT:", result)  # debug
+
+        # ✅ ALWAYS RETURN FINAL ANSWER ONLY
+        return result.get("answer", "No response generated")
 
 if __name__ =="__main__":
     rag=AgenticRAG()

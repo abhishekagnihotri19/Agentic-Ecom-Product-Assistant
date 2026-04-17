@@ -28,5 +28,5 @@ ragas==0.3.1
 grpcio
 grpcio-tools
 
--e .
+
 

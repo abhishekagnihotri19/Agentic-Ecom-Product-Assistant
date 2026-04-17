@@ -1,19 +1,17 @@
-# force update
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# install git
+# install system deps
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt pyproject.toml ./
-COPY prod_assistant ./prod_assistant
-
+# install python deps
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# copy app
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8001
 
-# run uvicorn properly on 0.0.0.0:8000
-CMD ["bash", "-c", "python mcp_servers/product_search_server.py & uvicorn prod_assistant.router.main:app --host 0.0.0.0 --port 8000 --workers 2"]
+CMD ["uvicorn", "prod_assistant.router.main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "2"]

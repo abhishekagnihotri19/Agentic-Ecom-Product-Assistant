@@ -20,7 +20,7 @@ class ApiKeyManager:
     def __init__(self):
        self.api_keys = {"GOOGLE_API_KEY": os.getenv("GOOGLE_API_KEY"),
                         "GROQ_API_KEY": os.getenv("GROQ_API_KEY"),
-                        "ASTRA_DB_API_KEY" : os.getenv("ASTRA_DB_API_KEY"),
+                        "ASTRA_DB_API_KEY" : os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
                         "ASTRA_DB_KEYSPACE" : os.getenv("ASTRA_DB_KEYSPACE"),
                         "ASTRA_DB_APPLICATION_TOKEN" : os.getenv ("ASTRA_DB_APPLICATION_TOKEN"),}
        for key, val in self.api_keys.items():
