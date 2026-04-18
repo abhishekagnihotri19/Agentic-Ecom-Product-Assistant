@@ -30,7 +30,7 @@ It leverages **Agentic AI** to autonomously decide which tools and workflows to 
 - **Architecture**: MCP Server  
 - **Deployment**: AWS EKS (Kubernetes)  
 - **Backend**: Python (FastAPI)  
-- **Frontend**: (Add if applicable)
+
 
 ---
 
