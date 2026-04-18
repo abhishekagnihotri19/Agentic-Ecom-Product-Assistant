@@ -22,7 +22,7 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    print("🛑 Shutting down app...")
+    print(" Shutting down app...")
 
 
 # ✅ FastAPI app with lifespan
@@ -44,15 +44,15 @@ app.mount(
 async def index(request: Request):
     print("🔥 INDEX ROUTE HIT")
     return templates.TemplateResponse(
-        request,                 # ✅ FIRST
-        "index.html",            # ✅ SECOND
-        {"request": request}     # ✅ THIRD
+        request,                 
+        "index.html",            
+        {"request": request}     
     )
 @app.post("/get", response_class=PlainTextResponse)
 async def chat(msg: str = Form(...)):
     try:
         answer = agent.run_pipeline(msg)
-        return answer   # ✅ already string now
+        return answer   
 
     except Exception as e:
         print("❌ ERROR:", str(e))
